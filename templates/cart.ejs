@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panier - Car Auction</title>
+    <link rel="stylesheet" href="../assets/css/cart.css">
+</head>
+
+<%- include("../partials/header.ejs") %>
+
+<body>
+    <main>
+        <section class="cart">
+            <h1>Votre Panier</h1>
+            <div class="cart-items">
+                <div class="cart-item">
+                    <img src="../assets/img/mercedes.jpg" alt="Mercedes-Benz AMG GT-R Track Pack - 2020">
+                    <div class="item-details">
+                        <h2>Mercedes-Benz AMG GT-R Track Pack - 2020</h2>
+                        <p>Prix: 550 €</p>
+                        <div class="quantity">
+                            <label for="quantity1">Quantité:</label>
+                            <input type="number" id="quantity1" name="quantity" min="1" value="1">
+                        </div>
+                        <button class="remove-button">Retirer</button>
+                    </div>
+                </div>
+                <!-- Répéter cette section pour chaque article du panier -->
+            </div>
+            <div class="cart-summary">
+                <h2>Résumé de la commande</h2>
+                <p>Total: <span id="total-price">550 €</span></p>
+                <button class="checkout-button">Passer à la caisse</button>
+            </div>
+        </section>
+    </main>
+
+    <%- include("../partials/footer.ejs") %>
+
+    <script src="../assets/js/cart.js"></script>
+</body>
+</html>
