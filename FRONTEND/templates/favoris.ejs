@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Auction - Favoris</title>
+    <link rel="stylesheet" href="/assets/css/index.css">
+</head>
+
+<%- include("../partials/header.ejs", { hoster, user, path }) %>
+
+<body>
+    <% if (message) { %>
+        <div id="banner" class="banner <%= message.type %>">
+            <p><%= message.text %></p>
+        </div>
+    <% } %>
+    <main>
+        <section class="best-selling-cars">
+            <h2>Vos favoris</h2>
+            <div class="car-list" id="car-list">
+                <% if(cars.length === 0) { %>
+                    <p>Votre liste de favoris est vide.</p>
+                <% } else { %>
+                <% cars.forEach(car => { %>
+                <div class="car-item">
+                    <img src="/uploads/<%= car.images[0] %>" alt="<%= car.model %>">
+                <div class="car-details">
+                    <p><strong>Modèle:</strong> <%= car.model %></p>
+                    <p><strong>Prix actuel:</strong> <%= car.price %>€</p>
+                    <div class="buttons">
+                        <% if (car.sold) { %>
+                            <p>Cette voiture a été vendue.</p>
+                            <a href="/fav/<%= car.ID %>?action=remove" class="cta-button">Retirer</a>
+                        <% } else { %>
+                        <a href="/car/<%= car.ID %>" class="cta-button acheter">Voir</a>
+                        <a href="/fav/<%= car.ID %>?action=remove" class="cta-button">Retirer</a>
+                        <% } %>
+                    </div>
+                </div>
+                </div>
+                <% }) %>
+                <% } %>
+            </div>
+    </main>
+    
+    <%- include("../partials/footer.ejs", { hoster }) %>
+</body>
+</html>

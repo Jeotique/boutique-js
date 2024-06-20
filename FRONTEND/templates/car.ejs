@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produit - Mercedes-Benz AMG GT-R</title>
+    <link rel="stylesheet" href="/assets/css/car.css">
+    <link rel="stylesheet" href="/assets/css/banner.css">
+    <script src="/assets/js/car.js"></script>
+</head>
+
+<body>
+    <%- include("../partials/header.ejs", {hoster, user, path}) %>
+    <% if (message) { %>
+        <div id="banner" class="banner <%= message.type %>">
+            <p><%= message.text %></p>
+        </div>
+    <% } %>
+    <main>
+        <section class="product-details">
+            <div class="product-gallery">
+                <img id="mainImage" src="/uploads/<%= car.images[0] %>" alt="<%= car.model %>">
+                <div class="thumbnail-images">
+                    <img src="/uploads/<%= car.images[0] %>" alt="<%= car.make %> Thumbnail 1" onclick="changeImage('/uploads/<%= car.images[0] %>')">
+                    <img src="/uploads/<%= car.images[1] %>" alt="<%= car.make %> Thumbnail 2" onclick="changeImage('/uploads/<%= car.images[1] %>')">
+                    <img src="/uploads/<%= car.images[2] %>" alt="<%= car.make %> Thumbnail 3" onclick="changeImage('/uploads/<%= car.images[2] %>')">
+                </div>
+            </div>
+            <div class="product-info">
+                <h1><%= car.make %> <%= car.model %> - <%= car.year %></h1>
+                <p class="price">Prix: <span><%= car.price %> €</span></p>
+                <p class="description">
+                    <%= car.description %>
+                </p>
+                <div class="purchase-options">
+                    <% if(user) { %> 
+                        <% if (user.cars.includes(car.ID)) { %>
+                        <% } else { %>
+                        <% if (user.favoris && !user.favoris.includes(car.ID)) { %>
+                            <a href="/fav/<%= car.ID %>" class="cta-button acheter">Ajouter favoris</a>
+                        <% } else { %>
+                            <p>Cette voiture est déjà dans vos favoris.</p>
+                        <% } %>
+                        <% } %>
+                    <% } else { %>
+                        <p>Connectez-vous pour ajouter cette voiture à vos favoris.</p>
+                    <% } %>
+                        <% if (user && user.id === car.userID) { %>
+                            <p>Cette voiture est à vous.</p>
+                        <% } else { %>
+                            <% if(user) { %> 
+                                <% if (user.cars.includes(car.ID)) { %>
+                                    <p>Cette voiture est déjà à vous.</p>
+                                <% } else { %>
+                                <% if (user.panier && !user.panier.includes(car.ID)) { %>
+                                    <a href="/panier/<%= car.ID %>" class="cta-button acheter">Ajouter au panier</a>
+                                <% } else { %>
+                                    <p>Cette voiture est déjà dans votre panier.</p>
+                                <% } %>
+                                <% } %>
+                            <% } else { %>
+                                <p>Connectez-vous pour ajouter cette voiture à votre panier.</p>
+                            <% } %>
+                        <% } %>
+                </div>
+                <div class="payment-methods">
+                    <h3>Méthodes de paiement</h3>
+                    <ul>
+                        <li><img src="/assets/img/visa.png" alt="Visa"></li>
+                        <li><img src="/assets/img/mastercard.png" alt="Mastercard"></li>
+                        <li><img src="/assets/img/paypal.png" alt="PayPal"></li>
+                        <li><img src="/assets/img/amex.png" alt="American Express"></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section class="specifications">
+            <h2>Spécifications</h2>
+            <ul>
+                <li>Puissance: <%= car.horse %> ch</li>
+                <li>Accélération: 0-100 km/h en <%= car.fast %> secondes</li>
+            </ul>
+        </section>
+        <section class="additional-info">
+            <div class="tabs">
+                <button class="tab-button" onclick="openTab('reviews')">Avis</button>
+                <button class="tab-button" onclick="openTab('questions')">Questions/Réponses</button>
+                <button class="tab-button" onclick="openTab('bid-history')">Historique des enchères</button>
+            </div>
+            <div id="reviews" class="tab-content">
+                <h3>Avis</h3>
+                <p>Il n'y a pas encore d'avis.</p>
+            </div>
+            <div id="questions" class="tab-content">
+                <h3>Questions/Réponses</h3>
+                <p>Pas de questions pour le moment.</p>
+            </div>
+            <div id="bid-history" class="tab-content">
+                <h3>Historique des enchères</h3>
+                <p>Aucune enchère pour le moment.</p>
+            </div>
+        </section>
+    </main>
+    
+    <%- include("../partials/footer.ejs") %>
+</body>
+</html>

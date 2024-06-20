@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Auction</title>
+    <link rel="stylesheet" href="/assets/css/index.css">
+</head>
+
+<%- include("../partials/header.ejs", { hoster, user, path }) %>
+
+<body>
+    <% if (message) { %>
+        <div id="banner" class="banner <%= message.type %>">
+            <p><%= message.text %></p>
+        </div>
+    <% } %>
+    <main>
+        <section class="best-selling-cars">
+            <h2>En stock</h2>
+            <div class="car-list" id="car-list">
+                <% cars.forEach(car => { %>
+                <div class="car-item">
+                    <img src="/uploads/<%= car.images[0] %>" alt="<%= car.model %>">
+                    <div class="car-details">
+                        <p><strong>Modèle:</strong> <%= car.model %></p>
+                        <p><strong>Prix actuel:</strong> <%= car.price %>€</p>
+                        <div class="buttons">
+                            <a href="/car/<%= car.ID %>" class="cta-button acheter">Voir</a>
+                            <% if (user && user.id === car.userID) { %>
+                                <p>Cette voiture est à vous.</p>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+            <div class="pagination" id="pagination"></div>
+            <div class="search-filters">
+                <div class="filter-item">
+                    <a href="/?filter=bmw" class="cta-button acheter">NOS BMW</a>
+                    <img src="/assets/img/bmw-logo.png" alt="BMW Logo" class="brand-logo">
+                </div>
+                <div class="filter-item">
+                    <a href="/?filter=merco" class="cta-button acheter">NOS MERCEDES</a>
+                    <img src="/assets/img/mercedes-logo.png" alt="Mercedes Logo" class="brand-logo">
+                </div>
+                <div class="filter-item">
+                    <a href="/?filter=audi" class="cta-button acheter">NOS AUDI</a>
+                    <img src="/assets/img/audi-logo.png" alt="Audi Logo" class="brand-logo">
+                </div>
+                <a href="/?filter=lower" class="cta-button acheter">Prix croissant</a>
+                <a href="/?filter=higher" class="cta-button acheter">Prix décroissant</a>
+            </div>
+        </section>
+        <!-- Section héros -->
+        <section class="hero">
+            <img src="/assets/img/porshe_911.jpg" alt="Hero Image" class="hero-image">
+            <div class="hero-text">
+                <h1>Ici vous pouvez vendre votre voiture</h1>
+                <p>Les meilleures occasions pour vendre votre voiture ce trouve ici.</p>
+                <a href="<%= hoster %>/car/sell"><button class="cta-button">Vendre votre Voiture</button></a>
+            </div>
+        </section>
+        <!-- Section avis clients -->
+        <section class="testimonials">
+            <h2 class="sell-your-car">Nos Avis Clients</h2>
+            <div class="testimonial">
+                <p>Amin Bensouri : "Service incroyable et voitures de qualité !"</p>
+                <span>★★★★★</span>
+            </div>
+            <div class="testimonial">
+                <p>Cyril : "Très satisfait de mon achat, je recommande Car Auction."</p>
+                <span>★★★★★</span>
+            </div>
+            <div class="testimonial">
+                <p>Kheir : "Processus de vente rapide et efficace, merci !"</p>
+                <span>★★★★★</span>
+            </div>
+            <div class="testimonial">
+                <p>Allan : "Excellente expérience, je reviendrai pour ma prochaine voiture."</p>
+                <span>★★★★★</span>
+            </div>
+            <div class="testimonial">
+                <p>Jeremie : "Un large choix de voitures de qualité et un service client exceptionnel."</p>
+                <span>★★★★★</span>
+            </div>
+        </section>
+    </main>
+    
+    <%- include("../partials/footer.ejs", { hoster }) %>
+
+    <script src="/assets/js/script.js"></script>
+</body>
+</html>

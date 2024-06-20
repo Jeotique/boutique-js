@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiement - Car Auction</title>
+    <link rel="stylesheet" href="/assets/css/payment.css">
+    <link rel="stylesheet" href="/assets/css/banner.css">
+</head>
+
+<%- include("../partials/header.ejs") %>
+
+<body>
+    <% if (message) { %>
+        <div id="banner" class="banner <%= message.type %>">
+            <p><%= message.text %></p>
+        </div>
+    <% } %>
+    <main>
+        <section class="payment">
+            <h1>Informations de Paiement</h1>
+            <div class="payment-form">
+                <form action="/checkout/process" method="POST">
+                    <div class="billing-details">
+                        <h2>Détails de Facturation</h2>
+                        <div class="form-group">
+                            <label for="name">Nom complet</label>
+                            <input type="text" id="name" name="name" value="<%= user.firstname %> <%= user.lastname %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" value="<%= user.email %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Adresse</label>
+                            <input type="text" id="address" name="address" value="<%= user.address %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">Ville</label>
+                            <input type="text" id="city" name="city" value="<%= user.city %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="postal-code">Code Postal</label>
+                            <input type="text" id="postal-code" name="postal-code" value="<%= user.postal %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Pays</label>
+                            <input type="text" id="country" name="country" required>
+                        </div>
+                    </div>
+                    <div class="payment-details">
+                        <h2>Détails de Paiement</h2>
+                        <div class="form-group">
+                            <label for="card-name">Nom sur la carte</label>
+                            <input type="text" id="card-name" name="cardname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="card-number">Numéro de carte</label>
+                            <input type="text" id="card-number" name="cardnumber" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="expiry-date">Date d'expiration</label>
+                            <input type="text" id="expiry-date" name="expirydate" placeholder="MM/AA" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cvc">CVC</label>
+                            <input type="text" id="cvc" name="cvc" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-button">Payer maintenant <%= price %>€</button>
+                    <h2>Voitures :</h2>
+                    <ul>
+                        <% cars.forEach(car => { %>
+                            <li><%= car.model %> - <%= car.price %>€</li>
+                        <% }) %>
+                    </ul>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <%- include("../partials/footer.ejs") %>
+
+    <script src="/assets/js/payment.js"></script>
+</body>
+</html>

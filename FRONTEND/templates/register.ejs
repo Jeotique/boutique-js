@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <link rel="stylesheet" href="/assets/css/register.css">
+</head>
+
+<%- include("../partials/header.ejs", {hoster, user, path}) %>
+
+<body>
+    <% if (message) { %>
+        <div id="banner" class="banner <%= message.type %>">
+            <p><%= message.text %></p>
+        </div>
+    <% } %>
+    <main>
+        <div class="container">
+            <div class="form-container sign-up-container">
+                <form action="<%= hoster %>/register" method="POST">
+                    <h1>Créer un compte</h1>
+                    <input type="text" name="firstname" minlegnth="3" placeholder="Prénom" required/>
+                    <input type="text" name="lastname" minlength="3" placeholder="Nom" required/>
+                    <input type="email" name="email" minlength="5" placeholder="Email" required/>
+                    <input type="password" name="password" minlength="8" placeholder="Mot de passe" required/>
+                    <input type="text" name="address" placeholder="Adresse" minlength="8" required/>
+                    <input type="text" name="city" placeholder="Ville" min="3" required/>
+                    <input type="text" name="postal" placeholder="Code Postal" minlength="5" required/>
+                    <input type="text" name="phone" placeholder="Numéro de téléphone" minlength="10" required/>
+                    <button type="submit">S'inscrire</button>
+                    <p>Vous avez déjà un compte ? <a href="<%= hoster %>/login">Connexion</a></p>
+                </form>
+            </div>
+        </div>
+    </main>
+    
+    <%- include("../partials/footer.ejs") %>
+
+</body>
+</html>
